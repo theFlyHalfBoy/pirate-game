@@ -17,4 +17,4 @@ app.get('/desktop', (req, res) => res.render('init_desktop_view'));
 app.get('/mobile', (req, res) => res.render('init_mobile_view'));
 
 // Listening...
-app.listen(port, () => console.log('Example app listening on port ' + port));
+app.listen(port, () => console.log('Pirate Game listening on port ' + port));
