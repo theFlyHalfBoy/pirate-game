@@ -2,6 +2,12 @@ const express = require('express');
 const app = express();
 const port = 1337;
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.use(express.static('static'));
 
-app.listen(port, () => console.log('Example app listening on port ' + port))
+app.set('view engine', 'pug');
+app.set('views', './views');
+
+app.get('/', (req, res) => res.render('main_desktop_view'));
+
+app.listen(port, () => console.log('Example app listening on port ' + port));
+
