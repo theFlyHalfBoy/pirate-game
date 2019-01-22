@@ -1,4 +1,7 @@
 
+// Importing my local modules
+const initialise = require('./initialise.js');
+
 // Express setup
 const express = require('express');
 const app = express();
@@ -13,7 +16,10 @@ app.set('views', './views');
 
 // Dealing with GET requests on all subdomains
 app.get('/', (req, res) => res.render('home_view'));
-app.get('/desktop', (req, res) => res.render('init_desktop_view'));
+app.get('/desktop', (req, res) => {
+	res.render('init_desktop_view');
+	initialise.initialiseGameData(port);
+	});
 app.get('/mobile', (req, res) => res.render('init_mobile_view'));
 
 // Listening...

@@ -1,8 +1,18 @@
 .heading {
+	font-size: 72px;
     text-align: center;
     font-family: 'Ubuntu';
 }
 
 .buttons {
     text-align: center;
+}
+
+.title-button {
+	font-family: 'Ubuntu';
+	font-size: 48px;
+	min-width: 150px;
+	width: 25vw;
+	min-height: 72px;
+	height: 15vh;
 }
