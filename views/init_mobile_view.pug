@@ -1,1 +1,16 @@
-img(src = "/Oliver_Tailsqui.jpg")
+html
+    head
+        style
+            include ../static/style.css
+        script
+            include ../game.js
+            include ../server.js
+    body
+        form(id = 'mobile_play_form')
+            p Game ID: 
+                input(type = 'text', name = 'game_id')
+            p Nickname:
+                input(type = 'text', name = 'nickname')
+        p
+            button(onclick = 'getPlayerData()') Submit
+            
