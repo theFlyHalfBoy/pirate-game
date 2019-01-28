@@ -1,16 +1,16 @@
 html
     head
+        link(href = 'https://fonts.googleapis.com/css?family=Ubuntu', rel = 'stylesheet')
         style
             include ../static/style.css
-        script
-            include ../game.js
-            include ../server.js
     body
-        form(id = 'mobile_play_form')
+        form(id = 'mobile_play_form', method = 'post', action = '/mobile')
+            input(class = 'confirmation', type = 'text', name = 'reqType', value = 'login_page')
             p Game ID: 
                 input(type = 'text', name = 'game_id')
             p Nickname:
                 input(type = 'text', name = 'nickname')
-        p
-            button(onclick = 'getPlayerData()') Submit
-            
+            p Group Name:
+                input(type = 'text', name = 'group_name')
+            p
+                input(type = 'submit')
