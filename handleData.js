@@ -2,6 +2,30 @@
 // Importing FS, which is used to create the JSON file
 const fs = require('fs');
 
+// Function that ensures there are no duplicated names in gameData.json
+function noDuplicateNames(array, name, num) {
+    
+    console.log('At start of func');
+    console.log('Name: ' + name);
+    console.log('Num: ' + num);
+
+    // Checks every existing name against the inputted name, returning true
+    // only if none of the names match
+    if (array.every((value, index, array) => value.nickname != name)) {
+
+        // Returns the original name if the function has not recurred yet, and
+        // returns the name with the correct number appended if it has
+        return (num == 0) ? name : name.slice(0, -2) + '_' + num.toString(10);
+        
+    } else {
+
+        // Calls the function again to ensure the next iteration of the name
+        // does not already exist: uses an inline if statement to only remove
+        // the last two characters if they are present (if num != 0)
+        return noDuplicateNames(array, (num == 0) ? name + '_' + (num + 1).toString(10) : name.slice(0, -2) + '_' + (num + 1).toString(10), num + 1);
+    };
+}
+
 // Defining what the module will export using Node's preferred
 // notation which allows my import statements to be consistent
 module.exports = {
@@ -49,6 +73,9 @@ module.exports = {
         // parsing it back to a JS object
         var gameData = JSON.parse(fs.readFileSync('gameData' + formData.game_id + '.json'));
         
+        // Converting the inputted name to a non-duplicated version
+        var newName = noDuplicateNames(gameData.players, formData.nickname, 0);
+
         // Defining the player data object:
         //  - 'nickname' is the name the player enters upon connecting
         //  - 'group' is the name of the group that the player belongs to
@@ -60,7 +87,7 @@ module.exports = {
         //  - 'hitlist' is the list of the player's targets: this is used only
         //    to display cryptic messages to the players
         var playerData = {
-            nickname: formData.nickname,
+            nickname: newName,
             group: formData.group_name,
             grid: [
             [null, null, null, null, null, null, null],

@@ -27,10 +27,12 @@ app.set('views', './views');
 app.get('/', (req, res) => res.render('home_view'));
 
 app.get('/desktop', (req, res) => {
-    // Using Pug to render the initial desktop view
-    res.render('init_desktop_view');
+    
     // Initialising the gameData JSON file
     handleData.initialiseGameData(port);
+
+    // Using Pug to render the initial desktop view
+    res.render('init_desktop_view');
 });
 
 app.get('/mobile', (req, res) => res.render('init_mobile_view'));
@@ -38,7 +40,8 @@ app.get('/mobile', (req, res) => res.render('init_mobile_view'));
 // Dealing with POST requests on specific subdomains
 app.post('/mobile', (req, res) => {
 
-    reqType = req.body.reqType
+    // Finds the request type from the invisible text box in the form
+    reqType = req.body.req_type
 
     // Checking which input form is being used:
     // This denotes a request from the player login page
@@ -53,6 +56,7 @@ app.post('/mobile', (req, res) => {
 
     } else {
 
+        // Placeholder for any other POST requests on /mobile
         console.log('In-game request detected' + req.body);
     }
 });
