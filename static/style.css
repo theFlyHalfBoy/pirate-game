@@ -20,3 +20,35 @@
 .confirmation {
     visibility: hidden;
 }
+
+.player_grid {
+    border-collapse: collapse;
+}
+
+.player_grid_cell {
+    text-align: center;
+    border: 2px solid black;
+}
+
+/* This targets any screen that is in landscape orientation. */
+@media only screen and (orientation: landscape) and (min-device-aspect-ratio: 1/1) {
+    .player_grid_cell {
+        width: 12vh;
+        height: 12vh;
+    }
+}
+
+/* This targets any screen that is in portrait orientation*/
+@media only screen and (orientation: portrait) {
+    .player_grid_cell {
+        width: 12vw;
+        height: 12vw;
+    }
+}
+
+.player_grid_input {
+    text-align: center;
+    width: 90%;
+    height: 90%;
+    border: none;
+}

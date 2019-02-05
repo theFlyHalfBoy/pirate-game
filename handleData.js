@@ -4,10 +4,6 @@ const fs = require('fs');
 
 // Function that ensures there are no duplicated names in gameData.json
 function noDuplicateNames(array, name, num) {
-    
-    console.log('At start of func');
-    console.log('Name: ' + name);
-    console.log('Num: ' + num);
 
     // Checks every existing name against the inputted name, returning true
     // only if none of the names match
@@ -113,5 +109,12 @@ module.exports = {
 
         // Writing the JSON string back to the JSON file
         fs.writeFileSync('gameData' + formData.game_id + '.json', gameDataJSON);
-    }
+
+        // Returns the now-unique name, to be saved as a cookie on the client
+        return formData.game_id + newName;
+    },
+
+    initialisePlayerGrid: function(formData) {
+        console.log(formData);
+    } 
 }

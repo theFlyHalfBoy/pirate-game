@@ -5,7 +5,6 @@ html
             include ../static/style.css
     body
         form(id = 'mobile_play_form', method = 'post', action = '/mobile')
-            input(class = 'confirmation', type = 'text', name = 'req_type', value = 'login_page')
             p Game ID: 
                 input(type = 'text', name = 'game_id')
             p Nickname:
@@ -14,3 +13,4 @@ html
                 input(type = 'text', name = 'group_name')
             p
                 input(type = 'submit')
+                input(class = 'confirmation', type = 'text', name = 'req_type', value = 'login_page')

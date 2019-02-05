@@ -1,0 +1,29 @@
+html
+    head
+        style
+            include ../static/style.css
+    body
+        form
+            table(class = 'player_grid')
+                tr
+                    th 
+                    th A
+                    th B
+                    th C
+                    th D
+                    th E
+                    th F
+                    th G
+                    
+                    each num in [1, 2, 3, 4, 5, 6, 7]
+                    
+                        tr
+                            th(class = 'player_grid_head')= num
+
+                            each letter in ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+                            
+                                td(class = 'player_grid_cell')
+                                    input(class = 'player_grid_input', type = 'text', name = letter + num)
+            
+            input(type = 'submit')
+            input(class = 'confirmation', type = 'text', name = 'req_type', value = 'player_grid')

@@ -8,6 +8,7 @@ const fs = require('fs');
 // Express setup
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const app = express();
 const port = 1337;
 
@@ -15,6 +16,8 @@ app.use(bodyParser.urlencoded({
     extended: true
 }))
 app.use(bodyParser.json());
+
+app.use(cookieParser());
 
 // Defining static directory
 app.use(express.static('static'));
@@ -47,17 +50,15 @@ app.post('/mobile', (req, res) => {
     // This denotes a request from the player login page
     if (reqType == 'login_page') {
 
-        // Initialises a new player using their form inputs
-        handleData.initialiseNewPlayer(req.body);
+        // Initialises a new player using their form inputs, and sets a cookie on the
+        res.cookie('id', handleData.initialiseNewPlayer(req.body)).render('input_mobile_view');
 
-        // Renders the in-game view: to a user this appears
-        // to be a redirect, but it isn't
-        res.render('in_game_mobile_view');
+    } else if (reqType == 'player_grid') {
 
-    } else {
+        // Initialises
+        let grid = handleData.initialisePlayerGrid(req.body);
 
-        // Placeholder for any other POST requests on /mobile
-        console.log('In-game request detected' + req.body);
+        res.cookie('grid', grid).render('game_mobile_view');
     }
 });
 
