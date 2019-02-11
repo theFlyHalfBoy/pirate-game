@@ -18,7 +18,10 @@ function noDuplicateNames(array, name, num) {
         // Calls the function again to ensure the next iteration of the name
         // does not already exist: uses an inline if statement to only remove
         // the last two characters if they are present (if num != 0)
-        return noDuplicateNames(array, (num == 0) ? name + '_' + (num + 1).toString(10) : name.slice(0, -2) + '_' + (num + 1).toString(10), num + 1);
+        return noDuplicateNames(array,
+                                (num == 0) ? name + '_' + (num + 1).toString(10) : name.slice(0, -2) + '_' + (num + 1).toString(10),
+                                num + 1
+                                );
     };
 };
 
@@ -91,42 +94,42 @@ function make2DArray(data, rows, cols) {
 // which allows my import statements to be consistent
 module.exports = {
 
-	initialiseGameData: function(id) {
-		
-		// Defining the structure of the JSON file:
-		//  - 'id' will be the unique game ID, allowing for simultaneous games
-		//  - 'players' will be an array, each element of which  will be a JS
-		//    object representing a player in the game
-		//  - 'grid' is be a 7x7 2D array that simply stores which squares have
-		//    been visited and which are free. Syntax will be grid[6][4] for E7
-		//    (letters replaced by numbers, reversed, and decremented by one)
-		var gameData = {
-			id: id,
-			players: [],
-			grid: [
-                 /* A  B  C  D  E  F  G */
-            /* 1 */[0, 0, 0, 0, 0, 0, 0],
-            /* 2 */[0, 0, 0, 0, 0, 0, 0],
-            /* 3 */[0, 0, 0, 0, 0, 0, 0],
-            /* 4 */[0, 0, 0, 0, 0, 0, 0],
-            /* 5 */[0, 0, 0, 0, 0, 0, 0],
-            /* 6 */[0, 0, 0, 0, 0, 0, 0],
-            /* 7 */[0, 0, 0, 0, 0, 0, 0],
-            ]
-        };
+    initialiseGameData: function(id) {
+        
+        // Defining the structure of the JSON file:
+        //  - 'id' will be the unique game ID, allowing for simultaneous games
+        //  - 'players' will be an array, each element of which  will be a JS
+        //    object representing a player in the game
+        //  - 'grid' is be a 7x7 2D array that simply stores which squares have
+        //    been visited and which are free. Syntax will be grid[6][4] for E7
+        //    (letters replaced by numbers, reversed, and decremented by one)
+        var gameData = {
+            id: id,
+            players: [],
+            grid: [
+                /* A  B  C  D  E  F  G */
+           /* 1 */[0, 0, 0, 0, 0, 0, 0],
+           /* 2 */[0, 0, 0, 0, 0, 0, 0],
+           /* 3 */[0, 0, 0, 0, 0, 0, 0],
+           /* 4 */[0, 0, 0, 0, 0, 0, 0],
+           /* 5 */[0, 0, 0, 0, 0, 0, 0],
+           /* 6 */[0, 0, 0, 0, 0, 0, 0],
+           /* 7 */[0, 0, 0, 0, 0, 0, 0],
+           ]
+       };
 
-		// Converting the JS object 'gameData' into a JSON formatted string
-		var gameDataJSON = JSON.stringify(gameData);
+        // Converting the JS object 'gameData' into a JSON formatted string
+        var gameDataJSON = JSON.stringify(gameData);
 
-		// Writing the JSON string to a JSON file
-		fs.writeFile(
-			// Inserting the ID into the filename for multiple instances
-			'gameData' + id + '.json',
-			gameDataJSON,
-			'utf8',
-			() => console.log('Local JSON database initialised')
-        );
-	},
+        // Writing the JSON string to a JSON file
+        fs.writeFile(
+            // Inserting the ID into the filename for multiple instances
+            'gameData' + id + '.json',
+            gameDataJSON,
+            'utf8',
+            () => console.log('Local JSON database initialised')
+            );
+    },
 
     initialiseNewPlayer: function(formData) {
 
@@ -180,7 +183,7 @@ module.exports = {
     },
 
     initialisePlayerGrid: function(playerGrid, playerID, validInputs, validInputTotals) {
-        
+
         // Removes the unnecessary 'request type' parameter from the POST request
         delete playerGrid.req_type;
 
@@ -189,6 +192,8 @@ module.exports = {
         // if (!validateGrid(playerGrid, validInputs, validInputTotals)) {
         //     return "invalid";
         // };
+        // THIS IS ONLY COMMENTED OUT BECAUSE IT'S A PAIN TO ENTER A VALID GRID
+        // EVERY TIME. *DO NOT* FORGET TO UNCOMMENT IT WHEN NECESSARY!!!!!
 
         // Converts the player's form data to a 2D array
         let grid2D = make2DArray(playerGrid, 7, 7);
@@ -217,6 +222,6 @@ module.exports = {
         fs.writeFileSync('gameData' + gameID + '.json', gameDataJSON);
 
         // Returns the cleaned up grid, to be saved as a cookie on the client
-        return playerGrid;
-    } 
-}
+        return grid2D;
+    }
+};

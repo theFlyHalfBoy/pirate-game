@@ -1,16 +1,25 @@
 html
     head
+        //- Importing Ubuntu from Google Fonts
         link(href = 'https://fonts.googleapis.com/css?family=Ubuntu', rel = 'stylesheet')
         style
+            //- Importing my own CSS file
             include ../static/style.css
     body
+        //- The form that acts as the login screen for the user
         form(id = 'mobile_play_form', method = 'post', action = '/mobile')
+            
+            //- Field for the player to join the correct game using the ID
             p Game ID: 
                 input(type = 'text', name = 'game_id')
+            //- Field for the player to choose their nickname
             p Nickname:
                 input(type = 'text', name = 'nickname')
+            //- Field for the player to choose their team
             p Group Name:
                 input(type = 'text', name = 'group_name')
             p
+                //- Submit button
                 input(type = 'submit')
+                //- Invisible textbox that acts as a unique identifier for the Pug view
                 input(class = 'confirmation', type = 'text', name = 'req_type', value = 'login_page')

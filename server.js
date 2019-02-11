@@ -72,6 +72,7 @@ app.post('/mobile', (req, res) => {
         if (grid == "invalid") {
             res.render('input_mobile_view');
         } else {
+
             // Otherwise, sets a cookie with the player's personal grid, and renders the next page
             res.cookie('player_grid', grid).render('game_mobile_view', { grid: grid });
         };

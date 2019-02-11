@@ -1,7 +1,10 @@
+html * {
+    font-family: 'Ubuntu' !important;
+}
+
 .heading {
-	font-size: 72px;
+    font-size: 72px;
     text-align: center;
-    font-family: 'Ubuntu';
 }
 
 .buttons {
@@ -9,12 +12,11 @@
 }
 
 .title-button {
-	font-family: 'Ubuntu';
-	font-size: 48px;
-	min-width: 150px;
-	width: 25vw;
-	min-height: 72px;
-	height: 15vh;
+    font-size: 48px;
+    min-width: 150px;
+    width: 25vw;
+    min-height: 72px;
+    height: 15vh;
 }
 
 .confirmation {
