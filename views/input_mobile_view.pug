@@ -3,7 +3,7 @@ html
         style
             include ../static/style.css
     body
-        form
+        form(id = 'mobile_grid_form', method = 'post', action = '/mobile')
             table(class = 'player_grid')
                 tr
                     th 
@@ -23,7 +23,7 @@ html
                             each letter in ['A', 'B', 'C', 'D', 'E', 'F', 'G']
                             
                                 td(class = 'player_grid_cell')
-                                    input(class = 'player_grid_input', type = 'text', name = letter + num)
+                                    input(class = 'player_grid_input', type = 'text', name = letter + num, autocomplete = 'off')
             
             input(type = 'submit')
             input(class = 'confirmation', type = 'text', name = 'req_type', value = 'player_grid')
