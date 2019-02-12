@@ -32,12 +32,13 @@ app.set('views', './views');
 app.get('/', (req, res) => res.render('home_view'));
 
 app.get('/desktop', (req, res) => {
-    
-    // Initialising the gameData JSON file
-    handleData.initialiseGameData(port);
 
-    // Using Pug to render the initial desktop view
-    res.render('init_desktop_view');
+    console.log("before");
+
+    // Initialises the JSON database and renders the initial desktop view
+    res.render('init_desktop_view', { gameID: handleData.initialiseGameData() });
+
+    console.log("after");
 });
 
 app.get('/mobile', (req, res) => res.render('init_mobile_view'));

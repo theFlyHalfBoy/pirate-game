@@ -33,7 +33,7 @@ html * {
 }
 
 /* This targets any screen that is in landscape orientation. */
-@media only screen and (orientation: landscape) and (min-device-aspect-ratio: 1/1) {
+@media only screen and (orientation: landscape)/* and (min-device-aspect-ratio: 1/1)*/ {
     .player_grid_cell {
         width: 12vh;
         height: 12vh;
