@@ -95,11 +95,11 @@ function make2DArray(data, rows, cols) {
 module.exports = {
 
     initialiseGameData: function() {
-        
+
         // Setting up the game ID and checking variables
         let id = Math.floor(Math.random() * (10000 - 1000) ) + 1000;
         let idValid = false;
-        let file = './gameData/gameData' + id + '.json';
+        let file = 'gameData/gameData' + id + '.json';
 
         console.log("beforeID");
 
@@ -111,16 +111,19 @@ module.exports = {
         // existing games from being overwritten if the same code is chosen.
         while (idValid == false) {
             console.log("in while");
-            fs.open(file, 'r', (err, fd) => {
-                console.log("test " + err.message);
+            console.log(fs.openSync(file, 'r'));/*, (err, fd) => {
+                console.log("opened");
                 if (err) {
                     console.log("no dupe found");
                     idValid = true;
-                 } else {
+                } else {
                     console.log("dupe found");
                     id = Math.floor(Math.random() * (10000 - 1000) ) + 1000;
-                 };
-            });
+                };
+                fs.close(fd, (err) => {
+                    console.log("dab");
+                });
+            });*/
         };
 
         console.log("afterID");
