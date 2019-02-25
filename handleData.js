@@ -96,43 +96,30 @@ module.exports = {
 
     initialiseGameData: function() {
 
-        // Setting up the game ID and checking variables
-        let id = Math.floor(Math.random() * (10000 - 1000) ) + 1000;
+        // Setting up the game ID and check variable
+        let id;
         let idValid = false;
-        let file = 'gameData/gameData' + id + '.json';
-
-        console.log("beforeID");
 
         // Generates a random 4-digit integer to act as the game code
         // (numbers less than 1000 are not considered, as dealing with
-        // leading zeroes is too much effort than it's worth). The function
+        // leading zeroes is more effort than it's worth). The function
         // attempts to access the relevant file for the current ID, and only
         // stops looping when no duplicate file is found. This is to prevent
         // existing games from being overwritten if the same code is chosen.
         while (idValid == false) {
-            console.log("in while");
-            console.log(fs.openSync(file, 'r'));/*, (err, fd) => {
-                console.log("opened");
-                if (err) {
-                    console.log("no dupe found");
-                    idValid = true;
-                } else {
-                    console.log("dupe found");
-                    id = Math.floor(Math.random() * (10000 - 1000) ) + 1000;
-                };
-                fs.close(fd, (err) => {
-                    console.log("dab");
-                });
-            });*/
+            id = Math.floor(Math.random() * (10000 - 1000) ) + 1000;
+            try {
+                fs.openSync('gameData/gameData' + id + '.json', fs.constants.F_OK);
+            } catch (err) {
+                idValid = true;
+            };
         };
-
-        console.log("afterID");
 
         // Defining the structure of the JSON file:
         //  - 'id' will be the unique game ID, allowing for simultaneous games
         //  - 'players' will be an array, each element of which  will be a JS
         //    object representing a player in the game
-        //  - 'grid' is be a 7x7 2D array that simply stores which squares have
+        //  - 'grid' is a 7x7 2D array that simply stores which squares have
         //    been visited and which are free. Syntax will be grid[6][4] for E7
         //    (letters replaced by numbers, reversed, and decremented by one)
         let gameData = {

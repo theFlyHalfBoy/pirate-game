@@ -33,12 +33,9 @@ app.get('/', (req, res) => res.render('home_view'));
 
 app.get('/desktop', (req, res) => {
 
-    console.log("before");
-
     // Initialises the JSON database and renders the initial desktop view
     res.render('init_desktop_view', { gameID: handleData.initialiseGameData() });
 
-    console.log("after");
 });
 
 app.get('/mobile', (req, res) => res.render('init_mobile_view'));
