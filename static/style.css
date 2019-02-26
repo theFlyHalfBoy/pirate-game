@@ -1,5 +1,6 @@
 html * {
     font-family: 'Ubuntu' !important;
+    text-align: center;
 }
 
 .heading {
@@ -21,6 +22,45 @@ html * {
 
 .confirmation {
     visibility: hidden;
+}
+
+.desktop_init_table {
+    border-spacing: 20px;
+    width: 80vw;
+    height: 80vh;
+}
+
+.desktop_init_table_cell {
+    text-align: center;
+    font-size: 72;
+    font-weight: bold;
+    border: 2px solid black;
+    width: 33%;
+    height: 33%;
+}
+
+.cell_tall {
+    height: 66% !important;
+}
+
+.cell_wide {
+    width: 66% !important;
+}
+
+.desktop_init_table_heading {
+    font-size: 24;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: -50px;
+}
+
+.desktop_grid {
+    border-collapse: collapse;
+}
+
+.desktop_grid_cell {
+    text-align: center;
+    border: 2px solid black;
 }
 
 .player_grid {

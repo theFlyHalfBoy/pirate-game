@@ -39,4 +39,4 @@ Thumbs.db
 # Pirate Game Specifics #
 #########################
 **/gameData
-nodemon.js
+nodemon.json

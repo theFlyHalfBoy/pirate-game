@@ -14,7 +14,7 @@ const port = 1337;
 
 app.use(bodyParser.urlencoded({
     extended: true
-}))
+}));
 app.use(bodyParser.json());
 
 app.use(cookieParser());
