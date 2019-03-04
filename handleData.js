@@ -109,7 +109,7 @@ module.exports = {
         while (idValid == false) {
             id = Math.floor(Math.random() * (10000 - 1000) ) + 1000;
             try {
-                fs.openSync('gameData/gameData' + id + '.json', fs.constants.F_OK);
+                fs.openSync('./gameData/gameData' + id + '.json', fs.constants.F_OK);
             } catch (err) {
                 idValid = true;
             };
@@ -143,7 +143,7 @@ module.exports = {
         // Writing the JSON string to a JSON file
         fs.writeFile(
             // Inserting the ID into the filename for multiple instances
-            'gameData/gameData' + id + '.json',
+            './gameData/gameData' + id + '.json',
             gameDataJSON,
             'utf8',
             () => console.log('Local JSON database initialised')

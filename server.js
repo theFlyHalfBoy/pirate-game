@@ -34,7 +34,7 @@ app.get('/', (req, res) => res.render('home_view'));
 app.get('/desktop', (req, res) => {
 
     // Initialises the JSON database and renders the initial desktop view
-    res.render('init_desktop_view', { gameID: handleData.initialiseGameData() });
+    res.render('init_desktop_view', { gameID: handleData.initialiseGameData(), playerNames: ['a', 'b', 'c'] });
 
 });
 
