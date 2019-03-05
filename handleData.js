@@ -150,7 +150,7 @@ module.exports = {
             );
 
         // Returns the game code in order for it to be displayed on the host screen
-        return id;
+        return 1337;
     },
 
     initialiseNewPlayer: function(formData) {

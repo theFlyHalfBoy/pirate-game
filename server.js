@@ -4,6 +4,7 @@ const handleData = require('./handleData.js');
 
 //Importing generic Node modules needed throughout the program
 const fs = require('fs');
+const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest
 
 // Express setup
 const express = require('express');
@@ -21,6 +22,7 @@ app.use(cookieParser());
 
 // Defining static files directory
 app.use(express.static('static'));
+app.use(express.static('gameData'));
 
 // Defining views with Pug
 app.set('view engine', 'pug');
@@ -46,7 +48,7 @@ app.get('/mobile', (req, res) => res.render('init_mobile_view'));
 app.post('/mobile', (req, res) => {
 
     // Finds the request type from the invisible text box in the form
-    reqType = req.body.req_type
+    let reqType = req.body.req_type;
 
     // Checking which input form is being used:
     // This denotes a request from the player login page
