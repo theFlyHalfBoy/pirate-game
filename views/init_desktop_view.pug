@@ -5,8 +5,9 @@ html
         style
             //- Importing my own CSS file
             include ../static/style.css
-        script
-            include ../AJAX.js
+        script(src = 'AJAX.js')
+            //- setInterval(updatePlayers(gameID), 5000);
+            | console.log("gameID");
     body
         table(class = 'desktop_init_table')
             tr
@@ -22,5 +23,4 @@ html
                     p placeholder
                 td(class = 'desktop_init_table_cell cell_wide cell_tall', colspan = '2')
                     p(class = 'desktop_init_table_heading') Players
-                    p=playerNames
-                    button(class = 'title-button', onclick = 'updatePlayers(gameID)') Play
+                    p(id = 'playerNamesBox')=playerNames
