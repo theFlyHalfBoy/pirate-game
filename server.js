@@ -14,7 +14,8 @@ const app = express();
 const port = 1337;
 
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: true,
+    limit: '50mb'
 }));
 app.use(bodyParser.json());
 
@@ -48,11 +49,11 @@ app.get('/mobile', (req, res) => res.render('init_mobile_view'));
 app.post('/mobile', (req, res) => {
 
     // Finds the request type from the invisible text box in the form
-    let reqType = req.body.req_type;
+    let reqTypeM = req.body.req_type;
 
     // Checking which input form is being used:
     // This denotes a request from the player login page
-    if (reqType == 'login_page') {
+    if (reqTypeM == 'login_page') {
 
         // Initialises a new player using their form inputs, sets a cookie on the browser
         // that saves the game ID and unique nickname in one unique string, and renders 
@@ -60,7 +61,7 @@ app.post('/mobile', (req, res) => {
         res.cookie('player_id', handleData.initialiseNewPlayer(req.body)).render('input_mobile_view');
 
     // This denotes a request from the player grid input sreen
-    } else if (reqType == 'player_grid') {
+    } else if (reqTypeM == 'player_grid') {
 
         // Initialises the player grid in the JSON database, passing the accepted values
         // and their respective expected counts to the function

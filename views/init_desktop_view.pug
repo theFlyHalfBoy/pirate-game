@@ -5,9 +5,29 @@ html
         style
             //- Importing my own CSS file
             include ../static/style.css
-        script(src = 'AJAX.js')
-            //- setInterval(updatePlayers(gameID), 5000);
-            | console.log("gameID");
+        script().
+            gameID = #{gameID};
+
+            function updatePlayers(gameID) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            let gameData = JSON.parse(this.responseText);
+                            let playerNamesArr = [];
+                            for (i = 0; i < gameData.players.length; i++) {
+                                let p = gameData.players[i];
+                                playerNamesArr.push(p.nickname);
+                            }
+                            document.getElementById("playerCountBox").innerHTML = playerNamesArr.length;
+                            document.getElementById("playerNamesBox").innerHTML = playerNamesArr.join(", ");
+                       };
+                    };
+                xhttp.open("GET", "gameData" + gameID + ".json", true);
+                xhttp.send();
+            };
+
+            setInterval(updatePlayers, 2000, gameID);
+            
     body
         table(class = 'desktop_init_table')
             tr
@@ -16,7 +36,7 @@ html
                     p=gameID
                 td(class = 'desktop_init_table_cell')
                     p(class = 'desktop_init_table_heading') Players
-                    p=playerNames.length
+                    p(id = 'playerCountBox')=playerNames.length
             tr
                 td(class = 'desktop_init_table_cell cell_tall')
                     p(class = 'desktop_init_table_heading') Options
@@ -24,3 +44,8 @@ html
                 td(class = 'desktop_init_table_cell cell_wide cell_tall', colspan = '2')
                     p(class = 'desktop_init_table_heading') Players
                     p(id = 'playerNamesBox')=playerNames
+        form
+            input(type = 'submit')
+            input(class = 'confirmation', type = 'text', name = 'req_type', value = 'game_init_view')
+
+
