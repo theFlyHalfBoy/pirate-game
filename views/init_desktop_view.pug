@@ -6,46 +6,75 @@ html
             //- Importing my own CSS file
             include ../static/style.css
         script().
+
+            // Assigns the gameID passed to the Pug view to a JS variable
             gameID = #{gameID};
 
+            // An AJAX function that updates 
             function updatePlayers(gameID) {
+
+                // Initialises the xhttp library
                 var xhttp = new XMLHttpRequest();
+
+                // Called when the ready state of the request changes
                 xhttp.onreadystatechange = function() {
-                        if (this.readyState == 4 && this.status == 200) {
-                            let gameData = JSON.parse(this.responseText);
-                            let playerNamesArr = [];
-                            for (i = 0; i < gameData.players.length; i++) {
-                                let p = gameData.players[i];
-                                playerNamesArr.push(p.nickname);
-                            }
-                            document.getElementById("playerCountBox").innerHTML = playerNamesArr.length;
-                            document.getElementById("playerNamesBox").innerHTML = playerNamesArr.join(", ");
-                       };
-                    };
+
+                    // Checks that the request is complete
+                    if (this.readyState == 4 && this.status == 200) {
+
+                        // Converts the retrieved JSON string to a JS object
+                        let gameData = JSON.parse(this.responseText);
+
+                        // Initialises an empty array for the names of the players
+                        let playerNamesArr = [];
+
+                        // Iterates through each player in the game, 
+                        // and pushes their name to the array
+                        for (i = 0; i < gameData.players.length; i++) {
+                            let p = gameData.players[i];
+                            playerNamesArr.push(p.nickname);
+                        }
+
+                        // Writes the number of players, and their names, to their respective boxes
+                        document.getElementById("playerCountBox").innerHTML = playerNamesArr.length;
+                        document.getElementById("playerNamesBox").innerHTML = playerNamesArr.join(", ");
+                   };
+                };
+
+                // Opens the GET request for the JSON file
                 xhttp.open("GET", "gameData" + gameID + ".json", true);
+
+                // Sends the request
                 xhttp.send();
             };
 
+            // Calls updatePlayers(gameID) every 2 seconds, so the player list updates at a reasonable rate
             setInterval(updatePlayers, 2000, gameID);
             
     body
         table(class = 'desktop_init_table')
             tr
+                //- Box to display the game code
                 td(class = 'desktop_init_table_cell cell_wide', colspan = '2')
                     p(class = 'desktop_init_table_heading') Game Code
-                    p=gameID
+                    p= gameID
+                //- Box to display the number of players
                 td(class = 'desktop_init_table_cell')
                     p(class = 'desktop_init_table_heading') Players
-                    p(id = 'playerCountBox')=playerNames.length
+                    p(id = 'playerCountBox')= playerNames.length
             tr
+                //- Box to display the game options
                 td(class = 'desktop_init_table_cell cell_tall')
                     p(class = 'desktop_init_table_heading') Options
                     p placeholder
+                //- Box to display the player names
                 td(class = 'desktop_init_table_cell cell_wide cell_tall', colspan = '2')
                     p(class = 'desktop_init_table_heading') Players
-                    p(id = 'playerNamesBox')=playerNames
-        form
-            input(type = 'submit')
-            input(class = 'confirmation', type = 'text', name = 'req_type', value = 'game_init_view')
+                    p(id = 'playerNamesBox')= playerNames
+
+        form(id = 'desktop_init', method = 'post', action = '/desktop')
+            input(type = 'submit', value = 'Start Game')
+            input(class = 'confirmation', type = 'text', name = 'req_type', value = 'game_init')
+            input(class = 'confirmation', type = 'text', name = 'game_id', value = gameID)
 
 

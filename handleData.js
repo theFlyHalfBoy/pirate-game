@@ -134,7 +134,8 @@ module.exports = {
            /* 5 */[0, 0, 0, 0, 0, 0, 0],
            /* 6 */[0, 0, 0, 0, 0, 0, 0],
            /* 7 */[0, 0, 0, 0, 0, 0, 0],
-           ]
+           ],
+           chooseList: []
        };
 
         // Converting the JS object 'gameData' into a JSON formatted string
@@ -245,5 +246,12 @@ module.exports = {
 
         // Returns the cleaned up grid, to be saved as a cookie on the client
         return grid2D;
+    },
+
+    getGridAndChooseList: function(gameID) {
+
+        let gameData = JSON.parse(fs.readFileSync('gameData/gameData' + gameID + '.json'));
+
+        return [gameData.grid, gameData.chooseList];
     }
 };

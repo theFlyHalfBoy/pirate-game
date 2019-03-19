@@ -15,8 +15,9 @@ const port = 1337;
 
 app.use(bodyParser.urlencoded({
     extended: true,
-    limit: '50mb'
+    limit: '1kb'
 }));
+
 app.use(bodyParser.json());
 
 app.use(cookieParser());
@@ -52,35 +53,62 @@ app.post('/mobile', (req, res) => {
     let reqTypeM = req.body.req_type;
 
     // Checking which input form is being used:
-    // This denotes a request from the player login page
-    if (reqTypeM == 'login_page') {
+    switch (reqTypeM) {
 
-        // Initialises a new player using their form inputs, sets a cookie on the browser
-        // that saves the game ID and unique nickname in one unique string, and renders 
-        // the next mobile page
-        res.cookie('player_id', handleData.initialiseNewPlayer(req.body)).render('input_mobile_view');
+        // Denotes a request from the player login page
+        case 'login_page':
+            
+            // Initialises a new player using their form inputs, sets a cookie on the browser
+            // that saves the game ID and unique nickname in one unique string, and renders 
+            // the next mobile page
+            res.cookie('player_id', handleData.initialiseNewPlayer(req.body)).render('input_mobile_view');
+            
+            break;
 
-    // This denotes a request from the player grid input sreen
-    } else if (reqTypeM == 'player_grid') {
+        // This denotes a request from the player grid input sreen
+        case 'player_grid':
 
-        // Initialises the player grid in the JSON database, passing the accepted values
-        // and their respective expected counts to the function
-        let grid = handleData.initialisePlayerGrid(req.body, req.cookies.player_id,
-        ["200", "1000", "3000", "5000", "shield", "mirror", "knife", "choose", "double", "bomb", "swap", "skull", "gift", "rob", "bank"],
-        [ 25,    10,     2,      1,      1,        1,        1,       1,        1,        1,      1,      1,       1,      1,     1    ]);
+            // Initialises the player grid in the JSON database, passing the accepted values
+            // and their respective expected counts to the function
+            let grid = handleData.initialisePlayerGrid(req.body, req.cookies.player_id,
+            ["200", "1000", "3000", "5000", "shield", "mirror", "knife", "choose", "double", "bomb", "swap", "skull", "gift", "rob", "bank"],
+            [ 25,    10,     2,      1,      1,        1,        1,       1,        1,        1,      1,      1,       1,      1,     1    ]);
 
-        // Checks the result of intitialisePlayerGrid, and re-renders the grid page if required
-        if (grid == "invalid") {
-            res.render('input_mobile_view');
-        } else {
+            // Checks the result of intitialisePlayerGrid, and re-renders the grid page if required
+            if (grid == "invalid") {
+                res.render('input_mobile_view');
+            } else {
 
-            // Otherwise, sets a cookie with the player's personal grid, and renders the next page
-            res.cookie('player_grid', grid).render('game_mobile_view', { grid: grid });
-        };
+                // Otherwise, sets a cookie with the player's personal grid, and renders the next page
+                res.cookie('player_grid', grid).render('game_mobile_view', { grid: grid });
+            };
 
-    // Denotes an unrecognised request: logs an error but does nothing otherwise
-    } else {
-        console.log("Request not recognised");
+            break;
+
+        // Denotes an unrecognised request: logs an error but does nothing otherwise
+        default:
+            console.log("Request not recognised");
+    }
+});
+
+app.post('/desktop', (req, res) => {
+
+    let reqTypeD = req.body.req_type;
+    let gameID = req.body.game_id;
+
+    switch (reqTypeD) {
+
+        // Denotes a request from the initial desktop view
+        case 'game_init':
+
+            let gridAndList = handleData.getGridAndChooseList(gameID);
+            res.render('game_desktop_view', { grid: gridAndList[0], chooseList: /*gridAndList[1]*/[0,1,2,3] });
+
+            break;
+
+        // Denotes an unrecognised request: logs an error but does nothing otherwise
+        default:
+            console.log("Request not recognised");
     }
 });
 
