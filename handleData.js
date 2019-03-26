@@ -135,6 +135,7 @@ module.exports = {
            /* 6 */[0, 0, 0, 0, 0, 0, 0],
            /* 7 */[0, 0, 0, 0, 0, 0, 0],
            ],
+           currentSquare: 'TEST',
            chooseList: []
        };
 
@@ -202,10 +203,10 @@ module.exports = {
         fs.writeFileSync('gameData/gameData' + formData.game_id + '.json', gameDataJSON);
 
         // Returns the now-unique name, to be saved as a cookie on the client
-        return formData.game_id + newName;
+        return [formData.game_id, newName];
     },
 
-    initialisePlayerGrid: function(playerGrid, playerID, validInputs, validInputTotals) {
+    initialisePlayerGrid: function(playerGrid, gameID, playerName, validInputs, validInputTotals) {
 
         // Removes the unnecessary 'request type' parameter from the POST request
         delete playerGrid.req_type;
@@ -220,10 +221,6 @@ module.exports = {
 
         // Converts the player's form data to a 2D array
         let grid2D = make2DArray(playerGrid, 7, 7);
-
-        // Separates the game ID from the nickname in the cookie
-        let gameID = playerID.slice(0, 4);
-        let playerName = playerID.slice(4);
 
         // Reading the JSON from file
         let gameData = JSON.parse(fs.readFileSync('gameData/gameData' + gameID + '.json'));
@@ -250,8 +247,10 @@ module.exports = {
 
     getGridAndChooseList: function(gameID) {
 
+        // Loads the game data from the specified JSON file
         let gameData = JSON.parse(fs.readFileSync('gameData/gameData' + gameID + '.json'));
 
+        // Returns the game's current grid and "choose next square" list
         return [gameData.grid, gameData.chooseList];
     }
 };

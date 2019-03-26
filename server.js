@@ -46,7 +46,7 @@ app.get('/mobile', (req, res) => res.render('init_mobile_view'));
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-// Dealing with POST requests on specific subdomains
+// Dealing with POST requests on the mobile subdomain
 app.post('/mobile', (req, res) => {
 
     // Finds the request type from the invisible text box in the form
@@ -57,12 +57,13 @@ app.post('/mobile', (req, res) => {
 
         // Denotes a request from the player login page
         case 'login_page':
-            
-            // Initialises a new player using their form inputs, sets a cookie on the browser
-            // that saves the game ID and unique nickname in one unique string, and renders 
-            // the next mobile page
-            res.cookie('player_id', handleData.initialiseNewPlayer(req.body)).render('input_mobile_view');
-            
+
+            // Initialises a new player using their form inputs, sets cookies on the browser
+            // that saves the game ID and unique nickname , and renders the next mobile page
+            let IDAndNickname = handleData.initialiseNewPlayer(req.body);
+            res.cookie('game_id', IDAndNickname[0])
+            res.cookie('player_nickname', IDAndNickname[1]).render('input_mobile_view');
+
             break;
 
         // This denotes a request from the player grid input sreen
@@ -70,7 +71,7 @@ app.post('/mobile', (req, res) => {
 
             // Initialises the player grid in the JSON database, passing the accepted values
             // and their respective expected counts to the function
-            let grid = handleData.initialisePlayerGrid(req.body, req.cookies.player_id,
+            let grid = handleData.initialisePlayerGrid(req.body, req.cookies.game_id, req.cookies.player_nickname
             ["200", "1000", "3000", "5000", "shield", "mirror", "knife", "choose", "double", "bomb", "swap", "skull", "gift", "rob", "bank"],
             [ 25,    10,     2,      1,      1,        1,        1,       1,        1,        1,      1,      1,       1,      1,     1    ]);
 
@@ -80,7 +81,7 @@ app.post('/mobile', (req, res) => {
             } else {
 
                 // Otherwise, sets a cookie with the player's personal grid, and renders the next page
-                res.cookie('player_grid', grid).render('game_mobile_view', { grid: grid });
+                res.cookie('player_grid', grid).render('game_mobile_view', { grid: grid, gameID: req.cookies.game_id });
             };
 
             break;
@@ -91,18 +92,23 @@ app.post('/mobile', (req, res) => {
     }
 });
 
+// Dealing with POST requests on the desktop subdomain
 app.post('/desktop', (req, res) => {
 
     let reqTypeD = req.body.req_type;
     let gameID = req.body.game_id;
 
+    // Checking which input form is being used
     switch (reqTypeD) {
 
         // Denotes a request from the initial desktop view
         case 'game_init':
 
-            let gridAndList = handleData.getGridAndChooseList(gameID);
-            res.render('game_desktop_view', { grid: gridAndList[0], chooseList: /*gridAndList[1]*/[0,1,2,3] });
+            // Fetches the current game grid and "choose next square" list from the gameData JSON
+            let gridAndChooseList = handleData.getGridAndChooseList(gameID);
+
+            // Renders the in-game desktop view with the fetched grid and list
+            res.render('game_desktop_view', { gameID: gameID, grid: gridAndChooseList[0], chooseList: gridAndChooseList[1] });
 
             break;
 
