@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 
@@ -116,6 +117,12 @@ app.post('/desktop', (req, res) => {
         default:
             console.log("Request not recognised");
     }
+});
+
+app.post('/gameData', (req, res) => {
+    
+    handleData.updateCurrentSquare(req.body.id, req.body.s);
+    
 });
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

@@ -135,7 +135,7 @@ module.exports = {
            /* 6 */[0, 0, 0, 0, 0, 0, 0],
            /* 7 */[0, 0, 0, 0, 0, 0, 0],
            ],
-           currentSquare: 'TEST',
+           currentSquare: '',
            chooseList: []
        };
 
@@ -252,5 +252,19 @@ module.exports = {
 
         // Returns the game's current grid and "choose next square" list
         return [gameData.grid, gameData.chooseList];
+    },
+
+    updateCurrentSquare: function(gameID, s) {
+
+        // Loads the game data from the specified JSON file
+        let gameData = JSON.parse(fs.readFileSync('gameData/gameData' + gameID + '.json'));
+
+        gameData.currentSquare = s;
+
+        // Converting the object back to JSON
+        let gameDataJSON = JSON.stringify(gameData);
+
+        // Writing the JSON string back to the JSON file
+        fs.writeFileSync('gameData/gameData' + gameID + '.json', gameDataJSON);
     }
 };

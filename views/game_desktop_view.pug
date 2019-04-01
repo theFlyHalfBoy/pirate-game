@@ -11,11 +11,11 @@ html
 
         script().
 
-            // Assigns the gameID passed to the Pug view to a JS variable
-            gameID = #{gameID};
-
             // An AJAX function that updates 
             function setCurrentSquare(gameID, square) {
+
+                // let data = { id: gameID, s: square };
+                // console.log(data);
 
                 // Initialises the xhttp library
                 var xhttp = new XMLHttpRequest();
@@ -26,18 +26,18 @@ html
                     // Checks that the request is complete
                     if (this.readyState == 4 && this.status == 200) {
 
-                        // Converts the retrieved JSON string to a JS object
-                        let gameData = JSON.parse(this.responseText);
-
-                        gameData.currentSquare = square;
+                        console.log('dank');
                    };
                 };
 
                 // Opens the GET request for the JSON file
-                xhttp.open("GET", "gameData" + gameID + ".json", true);
+                xhttp.open("POST", "/gameData", true);
+
+                //
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
 
                 // Sends the request
-                xhttp.send();
+                xhttp.send("id=" + gameID + "&s=" + square);
             };
 
     body
@@ -70,7 +70,7 @@ html
 
                                     if (cellType == 0)
                                         - let cellName = letters[c] + (r + 1);
-                                        button(class= cellName, onclick = setCurrentSquare(gameID, cellName)) Choose
+                                        button(class= cellName, onclick = 'setCurrentSquare(' + gameID + ', "' + cellName + '")') Choose
 
             td
                 //- Creates the "choose next square" list from the fetched JSON data
