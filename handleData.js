@@ -73,12 +73,17 @@ function make2DArray(data, rows, cols) {
     for (let i = 0; i < rows; i++) {
         grid.push([]);
         for (let j = 0; j < cols; j++) {
-            grid[i].push("");
+            grid[i].push(null);
         };
     };
 
     // Iterating through the data and inserting it into the blank grid
     for (let cell in data) {
+
+
+        if (cell == '' || cell == null) {
+            cell = "empty";
+        };
 
         // Using integer and remainder division to insert the data correctly
         grid[parseInt(r/rows)][c%cols] = data[cell];
