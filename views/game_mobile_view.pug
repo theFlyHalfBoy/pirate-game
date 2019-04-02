@@ -13,7 +13,6 @@ html
 
             // Assigns the gameID passed to the Pug view to a JS variable
             let gameID = #{gameID};
-            // let grid = [!{grid.map(row => '[' + row.toString() + ']')}];
             let grid = [!{grid.map(row => row.map(cell => '"' + cell.toString() + '"'))}];
             console.log(grid);
             let letterIndices = {
