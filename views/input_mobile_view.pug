@@ -5,6 +5,7 @@ html
         style
             //- Importing my own CSS file
             include ../static/style.css
+        - var letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
     body
         //- Creating the form that will act as the user input
         form(id = 'mobile_grid_form', method = 'post', action = '/mobile')
@@ -12,13 +13,9 @@ html
                 //- Creating the top row of the grid and displaying each column's letter
                 tr
                     th 
-                    th A
-                    th B
-                    th C
-                    th D
-                    th E
-                    th F
-                    th G
+                    //- Iterates through the letters from A to G, and creates a header for each
+                    each letter in letters
+                        th= letter
                     
                 //- Iterates through the numbers from 1 to 7
                 each num in [1, 2, 3, 4, 5, 6, 7]

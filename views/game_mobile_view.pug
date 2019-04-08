@@ -8,6 +8,8 @@ html
         style
             //- Importing my own CSS file
             include ../static/style.css
+            
+        - var letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
 
         script().
 
@@ -95,13 +97,10 @@ html
                     //- Creating the top row of the grid and displaying each column's letter
                     tr
                         th 
-                        th A
-                        th B
-                        th C
-                        th D
-                        th E
-                        th F
-                        th G
+                        
+                        //- Iterates through the letters from A to G, and creates a header for each
+                        each letter in letters
+                            th= letter
 
                     //- Iterates through each row in the grid passed to the view
                     each row, index in grid
