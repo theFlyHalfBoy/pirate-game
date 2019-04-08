@@ -13,8 +13,21 @@ html
 
             // Assigns the gameID passed to the Pug view to a JS variable
             let gameID = #{gameID};
+
+            // Converts the 2D grid passed to the view into a 1D array
+            // (this is because of the way Pug handles interpolation, it
+            // was significantly easier to simply convert to a 1D array
+            // than parse it into a 2D array)
             let grid = [!{grid.map(row => row.map(cell => '"' + cell.toString() + '"'))}];
-            console.log(grid);
+
+            // Initialising the current square
+            let currentSquare;
+
+            // Initialising the contents of the current square
+            let currentSquareContents;
+
+            // Initialising an object to convert from letters to numbers
+            // for the grid indices
             let letterIndices = {
                 A: 0,
                 B: 1,
@@ -25,7 +38,7 @@ html
                 G: 6,
             }
 
-            // An AJAX function that updates 
+            // An AJAX function that updates currentSquare and currentSquareContents
             function checkGrid(gameID) {
 
                 // Initialises the xhttp library
@@ -40,29 +53,28 @@ html
                         // Converts the retrieved JSON string to a JS object
                         let gameData = JSON.parse(this.responseText);
 
-                        //
-                        let s = gameData.currentSquare;
-                        console.log("s: " + s);
-                        //
-                        document.getElementById("current_square_box").innerHTML = s;
+                        // Retrieving the current square from the JSON
+                        currentSquare = gameData.currentSquare;
 
-                        let colLetter = s.slice(0, 1);
-                        console.log("colLetter: " + colLetter);
+                        // Displaying the current square on the HTML page
+                        document.getElementById("current_square_box").innerHTML = currentSquare;
 
-                        let col = letterIndices[colLetter];
-                        console.log("col: " + col);
+                        // Converting the first letter of the square to an index
+                        let col = letterIndices[currentSquare.slice(0, 1)];
 
-                        let rowOld = s.slice(1, 2);
-                        console.log("rowOld: " + rowOld);
+                        // Converting the second letter of the square to an index
+                        let row = currentSquare.slice(1, 2) - 1;
 
-                        let row = rowOld - 1;
-                        console.log("row: " + row);
+                        // Converting the row and column indices into an index in
+                        // the one-dimensional grid array
+                        let index = row * 7 + col;
 
-                        let index = row * 7 + col
-                        console.log("index: " + index);
+                        // Retrieving the contents of the current square
+                        currentSquareContents = grid[index];
 
-                        let currentSquareContents = grid[index];
-                        console.log("currentSquareContents: " + currentSquareContents);
+                        // Displaying the contents of the current square
+                        // on the HTML page
+                        document.getElementById("current_square_contents_box").innerHTML = currentSquareContents;
                    };
                 };
 
@@ -73,6 +85,7 @@ html
                 xhttp.send();
             };
 
+            // Calls checkGrid every two seconds
             setInterval(checkGrid, 2000, gameID);
 
     body
@@ -108,3 +121,5 @@ html
             td
                 h1 Current Square:
                 p(id = 'current_square_box')
+                h1 Current Square Contents:
+                p(id = 'current_square_contents_box')

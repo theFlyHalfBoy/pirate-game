@@ -119,10 +119,11 @@ app.post('/desktop', (req, res) => {
     }
 });
 
+// Dealing with POST requests to /gameData: for retrieving and updating the gameData####.json
 app.post('/gameData', (req, res) => {
     
+    // Updates the currentSquare variable in the specified JSON file
     handleData.updateCurrentSquare(req.body.id, req.body.s);
-    
 });
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

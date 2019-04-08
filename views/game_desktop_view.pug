@@ -11,7 +11,7 @@ html
 
         script().
 
-            // An AJAX function that updates 
+            // An AJAX function that updates the current square
             function setCurrentSquare(gameID, square) {
 
                 // let data = { id: gameID, s: square };
@@ -34,10 +34,10 @@ html
                 // Opens the GET request for the JSON file
                 xhttp.open("POST", "/gameData", true);
 
-                //
+                // Required for server.js to see the data in the correct format
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
 
-                // Sends the request
+                // Sends the request in the required format (formatted as an HTML form)
                 xhttp.send("id=" + gameID + "&s=" + square);
             };
 

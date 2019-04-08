@@ -1,5 +1,5 @@
 
-// Importing FS, which is used to create the JSON file
+// Importing FS, which is used to create, open, and write the JSON file
 const fs = require('fs');
 
 // Function that ensures there are no duplicated names in gameData.json
