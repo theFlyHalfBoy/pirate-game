@@ -72,7 +72,7 @@ app.post('/mobile', (req, res) => {
 
             // Initialises the player grid in the JSON database, passing the accepted values
             // and their respective expected counts to the function
-            let grid = handleData.initialisePlayerGrid(req.body, req.cookies.game_id, req.cookies.player_nickname
+            let grid = handleData.initialisePlayerGrid(req.body, req.cookies.game_id, req.cookies.player_nickname,
             ["200", "1000", "3000", "5000", "shield", "mirror", "knife", "choose", "double", "bomb", "swap", "skull", "gift", "rob", "bank"],
             [ 25,    10,     2,      1,      1,        1,        1,       1,        1,        1,      1,      1,       1,      1,     1    ]);
 

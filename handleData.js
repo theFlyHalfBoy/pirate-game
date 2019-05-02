@@ -28,7 +28,7 @@ function noDuplicateNames(array, name, num) {
 // Ensures the grid contains a) only valid cell type names, and
 //                           b) the correct number of each cell type
 function validateGrid(grid, validInputs, validInputTotals) {
-    
+
     // Initialises an array the same length as
     let cellTypeCounts = new Array(validInputs.length).fill(0);
 
@@ -39,7 +39,7 @@ function validateGrid(grid, validInputs, validInputTotals) {
         // which in turn specifies the type of cell it is. Returns -1 if
         // the data is invalid
         let cellTypeIndex = validInputs.findIndex((element) => {return element == grid[cell]});
-        
+
         // Checks if the inputted data was valid, returns false if not
         if (cellTypeIndex == -1) {
             return false;
