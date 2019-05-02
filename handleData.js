@@ -41,7 +41,7 @@ function validateGrid(grid, validInputs, validInputTotals) {
         let cellTypeIndex = validInputs.findIndex((element) => {return element == grid[cell]});
         
         // Checks if the inputted data was valid, returns false if not
-        if (index == -1) {
+        if (cellTypeIndex == -1) {
             return false;
         } else {
 
@@ -218,9 +218,9 @@ module.exports = {
 
         // Ensures that the grid is valid (contains only valid cell types,
         // and the correct amount of each)
-        // if (!validateGrid(playerGrid, validInputs, validInputTotals)) {
-        //     return "invalid";
-        // };
+        if (!validateGrid(playerGrid, validInputs, validInputTotals)) {
+            return "invalid";
+        };
 
         // Converts the player's form data to a 2D array
         let grid2D = make2DArray(playerGrid, 7, 7);
