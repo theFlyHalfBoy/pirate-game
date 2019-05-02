@@ -218,11 +218,9 @@ module.exports = {
 
         // Ensures that the grid is valid (contains only valid cell types,
         // and the correct amount of each)
-        // if (!validateGrid(playerGrid, validInputs, validInputTotals)) {
-        //     return "invalid";
-        // };
-        // THIS IS ONLY COMMENTED OUT BECAUSE IT'S A PAIN TO ENTER A VALID GRID
-        // EVERY TIME. *DO NOT* FORGET TO UNCOMMENT IT WHEN NECESSARY!!!!!
+        if (!validateGrid(playerGrid, validInputs, validInputTotals)) {
+            return "invalid";
+        };
 
         // Converts the player's form data to a 2D array
         let grid2D = make2DArray(playerGrid, 7, 7);
